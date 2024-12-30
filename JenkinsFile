@@ -1,0 +1,37 @@
+pipeline {
+
+	agent any
+	tools{
+	maven "maven_3.9.9"
+	}
+	stages{
+	stage("Build Maven Project"){
+	 steps{
+	checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/swap2vijay/devops-automation']])
+	 bat "mvn clean install"
+	 }
+	}
+
+	 stage('Build Docker Image') {
+            steps {
+                script {
+                    bat 'docker build -t swap2vijay/devops-integration .'
+                }
+            }
+        }
+    stage('Push the Image to Docker Hub') {
+
+        steps{
+
+            script{
+            withCredentials([string(credentialsId: 'dockerhubpwd', variable: 'dockerhubpwd')]) {
+             bat "docker login -u swap2vijay -p ${dockerhubpwd}"
+            }
+
+            bat "docker push swap2vijay/devops-integration"
+
+            }
+            }
+        }
+    }
+    }
