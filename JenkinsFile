@@ -34,4 +34,35 @@ pipeline {
             }
         }
     }
+    stage('Deploy to k8') {
+    steps{
+    script{
+    kubeconfig(caCertificate: '''MIIDBTCCAe2gAwIBAgIIMNYLLEpI8fEwDQYJKoZIhvcNAQELBQAwFTETMBEGA1UE
+    AxMKa3ViZXJuZXRlczAeFw0yNDExMjEwNTQ1MTBaFw0zNDExMTkwNTUwMTBaMBUx
+    EzARBgNVBAMTCmt1YmVybmV0ZXMwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEK
+    AoIBAQDRr2XsLQDbIGB8vTkxvDEV0EyQfOv7IFkc+jfYxaUM/pw697P8Z83+rR7y
+    CimLt3auMKjwgwDD6ml4RRqStYn5Us0jSCtAgjDEE6wtVV6j0Ht18pD2LHQHPasB
+    sv/2XiMMqGwmNcYMCho3JwRBPpEsFLUCY5oFExITCtjWDxPHV+W6gF5GS3U985dr
+    ITdQzWMc18YyzvzRTSqPY+kSkOw1LfsOZA9ydsT2pr2N39Fo73dTy7PJgigDv8AN
+    H7OAScVd/iaB9DE5T24kFSCcPf/YzjlCnaQfhup3EiAcKkazJjOETDMjiwUynQPQ
+    UIVpJZh+NGDdNvlgd9y8wnHT+Y0fAgMBAAGjWTBXMA4GA1UdDwEB/wQEAwICpDAP
+    BgNVHRMBAf8EBTADAQH/MB0GA1UdDgQWBBSFUW1dQAGIruby0uX/pdvt8cL5xzAV
+    BgNVHREEDjAMggprdWJlcm5ldGVzMA0GCSqGSIb3DQEBCwUAA4IBAQDE3OrrQ3Ip
+    zzSjMdgJHKzuyXFy+Hpi+pQibj5bti+7NQfHuYm/8v2PEB9kzNdEJ9kvHwd5/3GN
+    AhhN/QNlGx/6j2TuCH9RXLBdRpJxE1uvTYHDDChnEps4tEy9XvG+pT9Hx+sOawwv
+    zimBUsjqTXNwaFkEpTqPUTjR1kfa6S1+poQLj9zGAP/9rF5AOkOWS3/U3sBq7mnr
+    Ru9KnUO1gGw+pXBtO0JoTi45qj5QXRI0RAcOYtmd4MPFUWyeFQ/Ux+Xz0Cn2Eqkz
+    B/fZ42eTslH46cFIU8/3B6TgVn+At3FcgLPHztAEk4iRBnFme5Roaj8DIlS0CS67
+    SAU9jJcID7zX''', serverUrl: 'https://127.0.0.1:57730') {
+                            // Kubernetes deployment steps
+                            echo 'Deploying to Kubernetes'
+
+                            // Apply the deployment using the deploymentservice.yaml file
+                            bat 'kubectl apply -f deploymentservice.yaml'
+
+                            // Optional: Verify the deployment
+                            bat 'kubectl get pods'
+    }
+    }
+    }
     }
