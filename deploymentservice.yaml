@@ -3,19 +3,19 @@ kind: Deployment
 metadata:
   name: spring-boot-k8s-deployment
   labels:
-    app: spring-boot-k8s
+    app: spring-boot-k8-sample
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: spring-boot-k8s
+      app: spring-boot-k8-sample
   template:
     metadata:
       labels:
-        app: spring-boot-k8s
+        app: spring-boot-k8-sample
     spec:
       containers:
-        - name: spring-boot-k8s
+        - name: spring-boot-k8-sample
           image: swap2vijay/springboot-rest-api
           imagePullPolicy: IfNotPresent
           ports:
@@ -27,7 +27,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: springboot-k8ssvcc
+  name: springboot-k8s-sample-svc
 spec:
   type: NodePort
   ports:
