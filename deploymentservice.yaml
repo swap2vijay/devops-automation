@@ -35,4 +35,4 @@ spec:
       targetPort: 8080
       protocol: TCP
   selector:
-    app: spring-boot-k8s
+    app: spring-boot-k8-sample
